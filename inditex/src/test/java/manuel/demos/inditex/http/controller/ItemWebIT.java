@@ -1,23 +1,20 @@
 package manuel.demos.inditex.http.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import manuel.demos.inditex.service.GetItemUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Web slice integration tests class, which is, integration between Spring web layer beans and the controller
  */
-//@WebMvcTest(controllers = ItemRestController.class)
+@WebMvcTest(controllers = ItemRestController.class)
 class ItemWebIT {
 
     @Autowired
@@ -29,8 +26,10 @@ class ItemWebIT {
         mockMvc.perform(get("/item", 42L)
                         .contentType("application/json")
                         .queryParam("applicationDate", LocalDateTime.now().toString())
-                        .queryParam("productID", 		"1")
-                        .queryParam("StringId", 		"1"))
+                        .queryParam("productID", 		"11")
+                        .queryParam("chainId", 		"1"))
+                .andDo(print())
+                // TODO add here all the fields that are expected to be found in the response
                 .andExpect(status().isOk());
     }
 }
