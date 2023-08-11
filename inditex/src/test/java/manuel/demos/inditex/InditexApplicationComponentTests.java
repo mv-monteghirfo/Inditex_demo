@@ -78,18 +78,18 @@ class InditexApplicationComponentTests {
 			"Then the expected product is sent back")
 	void wellFormedRequestSuccess(){
 
-		given().request(GET, "/producto", Map.of(
+		given().request(GET, "/item", Map.of(
 				"applicationDate", 	"1",
 				"productID", 		"1",
 				"StringId", 		"1"))
 				.then().statusCode(200)
 				.assertThat()
-				.body("producto.productId", equalTo(35455))
-				.body("producto.brandId",equalTo(1))
-				.body("producto.startDate", equalTo("10:00:00 14-08-2023"))
-				.body("producto.endDate", equalTo("10:00:00 14-08-2023"))
-				.body("producto.curr", equalTo(16))
-				.body("price", equalTo(12));
+				.body("item.productId", equalTo(35455))
+				.body("item.brandId",equalTo(1))
+				.body("item.startDate", equalTo("10:00:00 14-08-2023"))
+				.body("item.endDate", equalTo("10:00:00 14-08-2023"))
+				.body("item.curr", equalTo(16))
+				.body("item.price", equalTo(12));
 
 	}
 
