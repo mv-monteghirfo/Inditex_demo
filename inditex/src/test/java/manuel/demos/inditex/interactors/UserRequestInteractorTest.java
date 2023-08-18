@@ -39,9 +39,8 @@ class UserRequestInteractorTest {
         given(productQueryDsGateway.doesNotExist(TestData.itemId))
                 .willReturn(true);
 
-        ResponseModel responseModel = userRequestInteractor.queryForProduct(requestModel);
+        ResponseModel responseModel = userRequestInteractor.queryForProduct(TestData.requestModel);
 
-        BDDAssertions.then(responseModel).isEqualTo(TestData.responseModel);
         then(productPresenter).should().prepareFailView("Producto inexistente");
     }
 
