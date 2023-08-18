@@ -1,11 +1,15 @@
 package manuel.demos.inditex.interactors.models;
 
-import lombok.AllArgsConstructor;
+import lombok.*;
+import manuel.demos.inditex.entities.Currency;
 
 import java.time.LocalDateTime;
 
+@Data
 @AllArgsConstructor
 public class ResponseModel {
+
+    int id;
 
     int productId;
 
@@ -18,5 +22,7 @@ public class ResponseModel {
     LocalDateTime endDate;
 
     float price;
+
+    Currency currency;
 
 }

@@ -1,10 +1,13 @@
 package manuel.demos.inditex.interactors.boundaries;
 
 import lombok.RequiredArgsConstructor;
-import manuel.demos.inditex.entities.jpa.BaseProductDataMapper;
+import manuel.demos.inditex.entities.jpa.BaseProductSQLEntity;
 import manuel.demos.inditex.exceptions.ProductNotFoundException;
 import manuel.demos.inditex.repositories.ProductRepository;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -13,19 +16,21 @@ public class BaseProductQuery implements ProductQueryDsGateway {
     final ProductRepository productRepository;
 
     @Override
-    public boolean exists(int id) {
-        return productRepository.existsById(id);
+    public boolean exists(int productId) {
+        return productRepository.existsByProductId(productId);
     }
 
     @Override
-    public boolean doesNotExist(int id) {
-        return !exists(id);
+    public boolean doesNotExist(int productId) {
+        return !exists(productId);
     }
 
-    public BaseProductDataMapper findByProductId(int productId) throws ProductNotFoundException {
+    public List<BaseProductSQLEntity> findByProductIdAndAppDateBetweenByPriority(int productId, LocalDateTime appDate) throws ProductNotFoundException {
 
-        return productRepository.findById(productId).orElseThrow(
-                () -> new ProductNotFoundException("Producto no encontrado"));
+        List<BaseProductSQLEntity> listOfProductsInsideRange = productRepository.findByProductIdAndStartDateBeforeAndEndDateAfter(productId, appDate, appDate);
+        if (listOfProductsInsideRange.isEmpty()) throw new ProductNotFoundException("Producto no encontrado"); // TODO move this logic to the caller
+
+        return listOfProductsInsideRange;
     }
 
 }

@@ -9,28 +9,28 @@ import java.time.LocalDateTime;
 @Getter
 public class BaseProduct implements Product {
 
-    /** Identificador código de producto. */
-    private int productId;
+     /** Identificador código de producto. */
+     private int productId;
 
-    /** foreign key de la cadena del grupo (1 = ZARA) */
-    private int brandId; // UUID?
+     /** foreign key de la cadena del grupo (1 = ZARA) */
+     private int brandId; // UUID?
 
-    /** rango de fechas en el que aplica el precio tarifa indicado. */
-    private LocalDateTime startDate;
+     /** rango de fechas en el que aplica el precio tarifa indicado. */
+     private LocalDateTime startDate;
 
-    /** rango de fechas en el que aplica el precio tarifa indicado.*/
-    private LocalDateTime endDate;
+     /** rango de fechas en el que aplica el precio tarifa indicado.*/
+     private LocalDateTime endDate;
 
-    /** Identificador de la tarifa de precios aplicable. */
-    private int fee;
+     /** Identificador de la tarifa de precios aplicable. */
+     private int fee;
 
      /** Desambiguador de aplicación de precios. Si dos tarifas coinciden en un rago de fechas se aplica la de mayor prioridad (mayor valor numérico). */
      private int priority;
 
      /** precio final de venta. */
-    private float price;
+     private float price;
 
-    /** iso de la moneda.*/
-    private Currency currency;
+     /** iso de la moneda.*/
+     private Currency currency;
 
 }

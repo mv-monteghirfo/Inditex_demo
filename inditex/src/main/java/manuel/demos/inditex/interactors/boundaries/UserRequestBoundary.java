@@ -4,11 +4,14 @@ import manuel.demos.inditex.exceptions.ProductNotFoundException;
 import manuel.demos.inditex.interactors.models.RequestModel;
 import manuel.demos.inditex.interactors.models.ResponseModel;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
+/**
+ * This boundary class works as a connector to be implemented by compatible drivers for the client to make queries
+ * about products
+ */
 @Component
 public interface UserRequestBoundary {
 
-    public ResponseModel queryForProduct(RequestModel requestModel) throws ProductNotFoundException;
+    ResponseModel queryForProduct(RequestModel requestModel) throws ProductNotFoundException;
 
 }

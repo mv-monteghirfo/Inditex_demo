@@ -1,6 +1,7 @@
 package manuel.demos.inditex.http.controller;
 
 import manuel.demos.inditex.entities.BaseProductFactory;
+import manuel.demos.inditex.entities.Currency;
 import manuel.demos.inditex.interactors.UserRequestInteractor;
 import manuel.demos.inditex.interactors.boundaries.BaseProductQuery;
 import manuel.demos.inditex.interactors.boundaries.ProductQueryDsGateway;
@@ -43,11 +44,11 @@ class ProductWebIT {
     void whenValidInput_thenReturn200() throws Exception {
 
         BDDMockito.given(userRequest.queryForProduct(any(RequestModel.class)))
-                .willReturn(new ResponseModel (11, 1, 10, LocalDateTime.now(), LocalDateTime.now(), 10));
+                .willReturn(new ResponseModel (0, 11, 1, 10, LocalDateTime.now(), LocalDateTime.now(), 10, Currency.EUR));
 
         mockMvc.perform(get("/product")
                         .contentType("application/json")
-                        .queryParam("productID", 		"11")
+                        .queryParam("productId", 		"11")
                         .queryParam("brandId", 		"1")
                         .queryParam("applicationDate", applicationDate.toString()))
                 .andDo(print())

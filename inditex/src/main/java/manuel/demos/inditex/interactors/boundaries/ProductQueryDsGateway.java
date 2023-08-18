@@ -1,8 +1,11 @@
 package manuel.demos.inditex.interactors.boundaries;
 
-import manuel.demos.inditex.entities.jpa.BaseProductDataMapper;
+import manuel.demos.inditex.entities.jpa.BaseProductSQLEntity;
 import manuel.demos.inditex.exceptions.ProductNotFoundException;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * This class provides an abstraction over the data layer
@@ -14,6 +17,6 @@ public interface ProductQueryDsGateway {
 
     boolean doesNotExist(int i);
 
-    BaseProductDataMapper findByProductId(int productId) throws ProductNotFoundException;
+    List<BaseProductSQLEntity> findByProductIdAndAppDateBetweenByPriority(int productId, LocalDateTime appDate) throws ProductNotFoundException;
 
 }

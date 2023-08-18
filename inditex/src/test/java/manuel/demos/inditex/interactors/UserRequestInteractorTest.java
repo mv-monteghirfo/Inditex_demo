@@ -4,7 +4,6 @@ import manuel.demos.inditex.entities.BaseProduct;
 import manuel.demos.inditex.entities.Currency;
 import manuel.demos.inditex.exceptions.ProductNotFoundException;
 import manuel.demos.inditex.interactors.boundaries.BaseProductQuery;
-import manuel.demos.inditex.interactors.boundaries.ProductQueryDsGateway;
 import manuel.demos.inditex.interactors.models.RequestModel;
 import manuel.demos.inditex.interactors.models.ResponseModel;
 import org.assertj.core.api.BDDAssertions;
@@ -74,17 +73,19 @@ class UserRequestInteractorTest {
                 13,
                 23);
 
-        final static BaseProduct itemToBeReturned = new BaseProduct(
+        final static BaseProduct productToBeReturned = new BaseProduct(
                 itemId, brandId, startDate, endDate, 2, 1, 10, Currency.EUR);
 
         final static RequestModel requestModel = new RequestModel(itemId, brandId, applicationDate);
         final static ResponseModel responseModel = new ResponseModel(
-                itemToBeReturned.getProductId(),
-                itemToBeReturned.getBrandId(),
-                itemToBeReturned.getFee(),
-                itemToBeReturned.getStartDate(),
-                itemToBeReturned.getEndDate(),
-                itemToBeReturned.getPrice() * itemToBeReturned.getFee()/10);
+                0,
+                productToBeReturned.getProductId(),
+                productToBeReturned.getBrandId(),
+                productToBeReturned.getFee(),
+                productToBeReturned.getStartDate(),
+                productToBeReturned.getEndDate(),
+                productToBeReturned.getPrice() * productToBeReturned.getFee()/10,
+                productToBeReturned.getCurrency());
 
     }
 

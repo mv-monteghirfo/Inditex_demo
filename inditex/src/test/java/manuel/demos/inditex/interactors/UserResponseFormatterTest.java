@@ -1,5 +1,6 @@
 package manuel.demos.inditex.interactors;
 
+import manuel.demos.inditex.entities.Currency;
 import manuel.demos.inditex.interactors.models.ResponseModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class UserResponseFormatterTest {
     @Test
     @DisplayName("Success View works")
     void checkSuccessViewWorks() {
-        ResponseModel responseModel = new ResponseModel(productId, brandId, appliedFee, startDate, endDate, price * appliedFee);
+        ResponseModel responseModel = new ResponseModel(0, productId, brandId, appliedFee, startDate, endDate, price * appliedFee, Currency.EUR);
         ResponseModel formattedResponse = userResponseFormatter.prepareSuccessView(responseModel);
 
         assertThat(formattedResponse).isEqualTo(responseModel);

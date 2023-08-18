@@ -2,20 +2,24 @@ package manuel.demos.inditex.interactors;
 
 import lombok.RequiredArgsConstructor;
 import manuel.demos.inditex.entities.BaseProductFactory;
-import manuel.demos.inditex.entities.jpa.BaseProductDataMapper;
+import manuel.demos.inditex.entities.jpa.BaseProductSQLEntity;
 import manuel.demos.inditex.exceptions.ProductNotFoundException;
 import manuel.demos.inditex.interactors.boundaries.ProductQueryDsGateway;
 import manuel.demos.inditex.interactors.boundaries.UserRequestBoundary;
 import manuel.demos.inditex.interactors.models.RequestModel;
 import manuel.demos.inditex.interactors.models.ResponseModel;
+import manuel.demos.inditex.utility.FinalPriceCalculator;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class UserRequestInteractor implements UserRequestBoundary {
 
     final BaseProductFactory baseProductFactory;
+    final FinalPriceCalculator finalPriceCalculator;
     final ProductQueryDsGateway productQueryDsGateway; // input
     final ProductPresenter productPresenter; // output
 
@@ -23,18 +27,24 @@ public class UserRequestInteractor implements UserRequestBoundary {
     public ResponseModel queryForProduct(RequestModel requestModel) throws ProductNotFoundException {
 
         if (productQueryDsGateway.doesNotExist(requestModel.getProductId())){
+            // TODO cover this case
             return productPresenter.prepareFailView("Producto inexistente");
+            // TODO throw ProductNotFoundException
         }
 
-        BaseProductDataMapper product = productQueryDsGateway.findByProductId(requestModel.getProductId());
+        List<BaseProductSQLEntity> productList = productQueryDsGateway.findByProductIdAndAppDateBetweenByPriority(requestModel.getProductId(), requestModel.getApplicationDate());
+        Comparator<BaseProductSQLEntity> comparator = Comparator.comparing(BaseProductSQLEntity::getPriority);
+        var product = productList.stream().max(comparator).orElseThrow(() -> new ProductNotFoundException("Tarifa no encontrada para los rangos de fechas del producto"));
 
         ResponseModel response = new ResponseModel (
+                product.getId(),
                 product.getProductId(),
                 product.getBrandId(),
                 product.getFee(),
                 product.getStartDate(),
                 product.getEndDate(),
-                product.getPrice() * product.getFee()/10);
+                finalPriceCalculator.calculatePrice(product.getPrice(), product.getFee()),
+                product.getCurrency());
 
         return productPresenter.prepareSuccessView(response);
 

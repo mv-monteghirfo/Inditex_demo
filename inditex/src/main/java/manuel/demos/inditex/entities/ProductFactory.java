@@ -12,8 +12,8 @@ public interface ProductFactory {
             int brandId,
             LocalDateTime startDate,
             LocalDateTime endDate,
-            short priceList,
-            short priority,
+            int fee,
+            int priority,
             float price,
             Currency currency);
 }
