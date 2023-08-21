@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 import manuel.demos.inditex.entities.Currency;
 
 import java.time.LocalDateTime;
@@ -19,38 +18,51 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "prices")
 public class BaseProductSQLEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    /** Identificador código de producto. */
+    /**
+     * Product identifier
+     */
     int productId;
 
-    /** foreign key de la cadena del grupo (1 = ZARA) */
+    /**
+     * Brand´s foreign key (1 = ZARA)
+     */
     int brandId;
 
-    /** rango de fechas en el que aplica el precio tarifa indicado. */
+    /**
+     * Date range in which the given price applies
+     */
     LocalDateTime startDate;
 
-    /** rango de fechas en el que aplica el precio tarifa indicado.*/
+    /**
+     * Date range in which the given price applies
+     */
     LocalDateTime endDate;
 
-    /** Identificador de la tarifa de precios aplicable. */
+    /**
+     * Idetifier of fee to be applied to the price
+     */
     int fee;
 
-    /** Desambiguador de aplicación de precios. Si dos tarifas coinciden en un rago de fechas se aplica la de mayor prioridad (mayor valor numérico). */
+    /**
+     * Prices application disambiguator. If two fees match in a date range, the highest in priority applies (highest numeric value)
+     */
     int priority;
 
-    /** precio final de venta. */
+    /**
+     * final price
+     */
     float price;
 
-    /** iso de la moneda.*/
+    /**
+     * currency´s ISO
+     */
     @Enumerated(EnumType.STRING)
     Currency currency;
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
 }

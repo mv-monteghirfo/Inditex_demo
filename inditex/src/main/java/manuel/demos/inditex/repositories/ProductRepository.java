@@ -1,7 +1,6 @@
 package manuel.demos.inditex.repositories;
 
 import manuel.demos.inditex.entities.jpa.BaseProductSQLEntity;
-import manuel.demos.inditex.exceptions.ProductNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

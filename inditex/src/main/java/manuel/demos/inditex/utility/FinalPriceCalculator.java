@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FinalPriceCalculator {
 
-    public float calculatePrice (float price, int fee){
+    public float calculatePrice(float price, int fee) {
         return switch (fee) {
             case 1 -> price * 1.1F;
             case 2 -> price * 1.2F;

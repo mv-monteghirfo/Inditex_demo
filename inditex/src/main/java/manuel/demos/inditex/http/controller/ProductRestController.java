@@ -1,7 +1,6 @@
 package manuel.demos.inditex.http.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import manuel.demos.inditex.exceptions.ProductNotFoundException;
@@ -37,12 +36,7 @@ public class ProductRestController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(applicationDate, formatter);
 
-        var response = userRequest.queryForProduct(new RequestModel(productId, brandId, dateTime));
-
-        // TODO there´s a problem parsing the response to JSON format. This log will show the response for the time being
-        log.info(response.toString());
-
-        return response;
+        return userRequest.queryForProduct(new RequestModel(productId, brandId, dateTime));
     }
 
     @GetMapping(value = "/ping")

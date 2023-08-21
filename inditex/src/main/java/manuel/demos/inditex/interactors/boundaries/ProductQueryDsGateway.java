@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public interface ProductQueryDsGateway {
 
-    boolean exists (int id);
+    boolean exists(int id);
 
     boolean doesNotExist(int i);
 

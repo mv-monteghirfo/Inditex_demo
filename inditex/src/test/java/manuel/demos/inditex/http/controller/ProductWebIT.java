@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -25,13 +27,15 @@ import static manuel.demos.inditex.http.controller.ProductWebIT.TestData.applica
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Web slice integration tests class, which is, integration between Spring web layer beans and the controller
+ *
+ * NOTE: Ideally, Integration Tests should be placed in a sepparate Maven Module in order to split fast unit test executions
+ * and slow IT executions in different maven runs.
  */
 @WebMvcTest(controllers = ProductRestController.class)
-//@Import({UserRequestInteractor.class, BaseProductFactory.class, BaseProductQuery.class, ProductRepository.class})
 class ProductWebIT {
 
     @Autowired
@@ -52,8 +56,13 @@ class ProductWebIT {
                         .queryParam("brandId", 		"1")
                         .queryParam("applicationDate", applicationDate.toString()))
                 .andDo(print())
-                // TODO add here all the fields that are expected to be found in the response
-                .andExpect(status().isOk());
+                .andExpectAll(status().isOk(),
+                        content().contentType(MediaType.APPLICATION_JSON),
+                        jsonPath("id").value("0"),
+                        jsonPath("productId").value("11"),
+                        jsonPath("brandId").value("1"),
+                        jsonPath("appliedFee").value("10.0"),
+                        jsonPath("price").value("10.0"));
     }
 
     static class TestData {

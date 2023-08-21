@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductDataMapper {
 
-    public BaseProductSQLEntity toBaseProductSQLEntity (BaseProduct product){
+    public BaseProductSQLEntity toBaseProductSQLEntity(BaseProduct product) {
 
         return new BaseProductSQLEntity(
                 null,

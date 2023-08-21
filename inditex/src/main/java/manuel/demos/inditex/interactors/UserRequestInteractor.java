@@ -26,17 +26,14 @@ public class UserRequestInteractor implements UserRequestBoundary {
 
     public ResponseModel queryForProduct(RequestModel requestModel) throws ProductNotFoundException {
 
-        if (productQueryDsGateway.doesNotExist(requestModel.getProductId())){
-            // TODO cover this case
+        if (productQueryDsGateway.doesNotExist(requestModel.getProductId())) {
             return productPresenter.prepareFailView("Producto inexistente");
-            // TODO throw ProductNotFoundException
         }
 
         List<BaseProductSQLEntity> productList = productQueryDsGateway.findByProductIdAndAppDateBetweenByPriority(requestModel.getProductId(), requestModel.getApplicationDate());
-        Comparator<BaseProductSQLEntity> comparator = Comparator.comparing(BaseProductSQLEntity::getPriority);
-        var product = productList.stream().max(comparator).orElseThrow(() -> new ProductNotFoundException("Tarifa no encontrada para los rangos de fechas del producto"));
+        var product = productList.stream().max(Comparator.comparing(BaseProductSQLEntity::getPriority)).orElseThrow(() -> new ProductNotFoundException("Tarifa no encontrada para los rangos de fechas del producto"));
 
-        ResponseModel response = new ResponseModel (
+        ResponseModel response = new ResponseModel(
                 product.getId(),
                 product.getProductId(),
                 product.getBrandId(),

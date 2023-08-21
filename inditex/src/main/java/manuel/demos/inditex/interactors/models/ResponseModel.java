@@ -1,6 +1,7 @@
 package manuel.demos.inditex.interactors.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import manuel.demos.inditex.entities.Currency;
 
 import java.time.LocalDateTime;

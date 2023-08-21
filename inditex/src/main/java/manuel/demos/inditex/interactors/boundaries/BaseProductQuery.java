@@ -28,7 +28,7 @@ public class BaseProductQuery implements ProductQueryDsGateway {
     public List<BaseProductSQLEntity> findByProductIdAndAppDateBetweenByPriority(int productId, LocalDateTime appDate) throws ProductNotFoundException {
 
         List<BaseProductSQLEntity> listOfProductsInsideRange = productRepository.findByProductIdAndStartDateBeforeAndEndDateAfter(productId, appDate, appDate);
-        if (listOfProductsInsideRange.isEmpty()) throw new ProductNotFoundException("Producto no encontrado"); // TODO move this logic to the caller
+        if (listOfProductsInsideRange.isEmpty()) throw new ProductNotFoundException("Producto no encontrado");
 
         return listOfProductsInsideRange;
     }
